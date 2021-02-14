@@ -68,7 +68,7 @@ class SberBot:
             print("Некорректный ввод")
             self.__enter_start_booking_time()
 
-    def __enter_end_booking_time(self, start_booking_time):
+    def __enter_end_booking_time(self, start_booking_time: datetime):
         time_str = input(
             "Введите время конца бронирования в форматее: ЧЧ:ММ ДД.ММ.ГГ\n"
         )
@@ -84,7 +84,9 @@ class SberBot:
             print("Некорректный ввод")
             self.__enter_end_booking_time(start_booking_time)
 
-    def __enter_number_of_persons(self, start_booking_time, end_booking_time):
+    def __enter_number_of_persons(
+        self, start_booking_time: datetime, end_booking_time: datetime
+    ):
         number_of_persons = input(
             "Введите кол-во человек для которого вы хотите забронировать столик\n"
         )
@@ -98,7 +100,10 @@ class SberBot:
         )
 
     def __check_availability(
-            self, start_booking_time, end_booking_time, number_of_persons
+        self,
+        start_booking_time: datetime,
+        end_booking_time: datetime,
+        number_of_persons: int,
     ):
         try:
             is_available_response = requests.post(
@@ -134,11 +139,11 @@ class SberBot:
             self.__start()
 
     def __create_booking(
-            self,
-            is_available_response,
-            start_booking_time,
-            end_booking_time,
-            number_of_persons,
+        self,
+        is_available_response: dict,
+        start_booking_time: datetime,
+        end_booking_time: datetime,
+        number_of_persons: int,
     ):
         name = input(
             "Пожалуйста, введите имя человека на которого хотите забронировать\n"
@@ -181,7 +186,12 @@ class SberBot:
             )
 
     def __send_booking_request(
-            self, number_of_persons, start_booking_time, end_booking_time, name, table_id
+        self,
+        number_of_persons: int,
+        start_booking_time: datetime,
+        end_booking_time: datetime,
+        name: str,
+        table_id,
     ):
         response_book = requests.post(
             self.server_url + "/api/booking/",
